@@ -3,6 +3,7 @@ import Calculator from "@/views/Calculator";
 import Register from "@/components/Register";
 import Login from "@/components/Login";
 import Dashboard from "@/components/Dashboard";
+import Todo from "@/components/Todo";
 
 export default [
     {
@@ -29,5 +30,10 @@ export default [
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard
+    },
+    {
+        path: '/todo',
+        name: 'Todo',
+        component: Todo
     },
 ]

@@ -4,6 +4,7 @@
       <b-button-group>
         <router-link class="btn btn-dark" to="/">Home</router-link>
         <router-link class="btn btn-dark" to="/calculator">Calculator</router-link>
+        <router-link class="btn btn-dark" to="/todo">Todo</router-link>
         <router-link class="btn btn-dark" to="/dashboard">Dashboard</router-link>
         <b-container v-if="!user.loggedIn">
           <router-link class="btn btn-dark" to="/auth/register">Register</router-link>

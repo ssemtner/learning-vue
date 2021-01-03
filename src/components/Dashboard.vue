@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-card title="Dashboard">
-      <b-alert variant="success" v-if="user" show="">You are logged in</b-alert>
+      <b-alert variant="success" v-if="user.loggedIn" show="">You are logged in</b-alert>
     </b-card>
   </b-container>
 </template>
