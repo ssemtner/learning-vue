@@ -1,17 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="nav">
+      <b-button-group>
+        <router-link class="btn btn-dark" to="/">Home</router-link>
+        <router-link class="btn btn-dark" to="/calculator">Calculator</router-link>
+        <router-link class="btn btn-dark" to="/dashboard">Dashboard</router-link>
+        <b-container v-if="!user.loggedIn">
+          <router-link class="btn btn-dark" to="/auth/register">Register</router-link>
+          <router-link class="btn btn-dark" to="/auth/login">Login</router-link>
+        </b-container>
+        <b-container v-else>
+          <p>{{ user.data.displayName }}</p>
+          <b-button variant="danger" @click.prevent="signOut">Sign Out</b-button>
+        </b-container>
+      </b-button-group>
+    </div>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {mapGetters} from "vuex"
+import firebase from "firebase"
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
+  },
+  methods: {
+    signOut() {
+      firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            this.$router.replace({name: "Home"})
+          })
+    }
   }
 }
 </script>
@@ -23,6 +49,21 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: whitesmoke;
+  text-decoration: none;
+  outline: none;
+}
+
+#nav a.router-link-exact-active {
+  background-color: #117a8b;
+}
+
 </style>
