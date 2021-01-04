@@ -54,18 +54,12 @@
       </b-form-group>
       <b-button variant="success" type="submit">Add</b-button>
     </b-form>
-
-    <br>
-
-    <b-button variant="primary" @click="saveTasks">Save</b-button>
   </b-container>
 </template>
 
 <script>
 import {mapGetters} from "vuex"
-import firebase from "@/firebaseInit"
-
-const db = firebase.firestore()
+import {db} from "@/firebaseInit"
 
 export default {
   name: "Todo",
@@ -87,20 +81,7 @@ export default {
     })
   },
   methods: {
-    addItem() {
-      this.tasks = [...this.tasks, {id: this.count, title: this.form.title}]
-      this.form = {}
-    },
-    removeItem(id) {
-      this.tasks.splice(this.tasks.findIndex(e => e.id === id), 1)
-    },
-    complete(id) {
-      this.tasks[this.tasks.findIndex(e => e.id === id)].completed = true
-    },
-    activate(id) {
-      this.tasks[this.tasks.findIndex(e => e.id === id)].completed = false
-    },
-    saveTasks() {
+    updateDatabase() {
       let data = []
       this.tasks.forEach(task => {
         data = [...data, {title: task.title, completed: task.completed}]
@@ -109,24 +90,45 @@ export default {
       db.collection("todos")
           .doc(this.user.data.email)
           .set({
-            tasks: data
+            tasks: data,
           })
-    }
+    },
+    addItem() {
+      this.tasks = [...this.tasks, {
+        id: this.count,
+        title: this.form.title,
+        completed: false
+      }]
+      this.form = {}
+      this.updateDatabase()
+    },
+    removeItem(id) {
+      this.tasks.splice(this.tasks.findIndex(e => e.id === id), 1)
+      this.updateDatabase()
+    },
+    complete(id) {
+      this.tasks[this.tasks.findIndex(e => e.id === id)].completed = true
+      this.updateDatabase()
+    },
+    activate(id) {
+      this.tasks[this.tasks.findIndex(e => e.id === id)].completed = false
+      this.updateDatabase()
+    },
+  },
+  beforeCreate() {
+
   },
   created() {
-    db.collection("todos")
-        .doc(this.user.data.email)
-        .get()
+    db.collection("todos").doc().get()
         .then((doc) => {
-              doc.data().tasks.forEach((task) => {
-                this.tasks = [...this.tasks, {
-                  id: this.count,
-                  title: task.title,
-                  completed: task.completed
-                }]
-              })
-            }
-        )
+          doc.data().tasks.forEach((task) => {
+            this.tasks = [...this.tasks, {
+              id: this.count,
+              title: task.title,
+              completed: task.completed
+            }]
+          })
+        })
   }
 }
 </script>

@@ -1,9 +1,9 @@
-import firebase from "firebase";
+import firebase from "firebase/app"
+import 'firebase/firestore'
 
 const firebaseConfig = {
     apiKey: "AIzaSyA8gxz8rjosluFuGb4oQ3em8WHUxH9_iZg",
     authDomain: "learning-vue-ssemtner.firebaseapp.com",
-    databaseURL: "learning-vue-ssemtner.firebaseio.com",
     projectId: "learning-vue-ssemtner",
     storageBucket: "learning-vue-ssemtner.appspot.com",
     messagingSenderId: "419303269049",
@@ -11,4 +11,8 @@ const firebaseConfig = {
     measurementId: "G-QHSN47EG9Z"
 }
 
-export default firebase.initializeApp(firebaseConfig)
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+
+export default firebaseApp
+
+export const db = firebaseApp.firestore()

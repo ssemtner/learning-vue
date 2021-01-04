@@ -10,6 +10,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import router from '@/router'
 
 import store from "@/store"
+import {firestorePlugin} from "vuefire";
+
+Vue.use(firestorePlugin)
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
