@@ -2,6 +2,8 @@
 
 const execa = require("execa");
 const fs = require("fs");
+const rimraf = require("rimraf");
+
 (async () => {
     try {
         await execa("git", ["checkout", "--orphan", "gh-pages"]);
@@ -18,7 +20,9 @@ const fs = require("fs");
         console.log("Pushing to gh-pages...");
 
         await execa("git", ["push", "origin", "HEAD:gh-pages", "--force"]);
-        await execa("rm", ["-r", folderName]);
+
+        await new Promise(resolve => rimraf(folderName, resolve));
+
         await execa("git", ["checkout", "-f", "main"]);
         await execa("git", ["branch", "-D", "gh-pages"]);
 
