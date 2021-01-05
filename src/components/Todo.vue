@@ -129,8 +129,6 @@ export default {
       this.tasks[this.tasks.findIndex(e => e.id === id)].completed = false
       this.updateDatabase()
     },
-    test() {
-    },
     loadData() {
       try {
         db.collection("todos").doc(this.user.data.email).get()
