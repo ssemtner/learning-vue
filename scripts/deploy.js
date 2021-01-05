@@ -22,7 +22,7 @@ const fs = require("fs");
         await execa("git", ["checkout", "-f", "main"]);
         await execa("git", ["branch", "-D", "gh-pages"]);
 
-        console.log("Successfully deployed, check you settings");
+        console.log("Successfully deployed");
     } catch (e) {
         // eslint-disable-next-line no-console
         console.log(e.message);
