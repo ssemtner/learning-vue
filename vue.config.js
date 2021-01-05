@@ -1,3 +1,5 @@
 module.exports = {
-    publicPath: '/learning-vue/'
+    publicPath: process.env.NODE_ENV === 'production'
+        ? '/learning-vue/'
+        : '/'
 }
