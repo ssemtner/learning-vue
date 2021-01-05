@@ -86,7 +86,6 @@ export default {
   name: "Todo",
   data() {
     return {
-      doc_id: "",
       form: {
         title: ""
       },

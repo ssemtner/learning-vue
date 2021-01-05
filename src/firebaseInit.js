@@ -15,4 +15,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig)
 
 export default firebaseApp
 
+const {Timestamp} = firebase.firestore
+export {Timestamp}
+
 export const db = firebaseApp.firestore()

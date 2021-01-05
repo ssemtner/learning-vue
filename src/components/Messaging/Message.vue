@@ -5,10 +5,12 @@
 
       <b-col cols="10" md="8">
         <b-card title="Message">
-          <UserIcon v-if="side === 'left'" class="message-icon left-message-icon bg-primary" size="50" :display-name="this.from"/>
-          <UserIcon v-if="side === 'right'" class="message-icon right-message-icon" size="50"
-                    :display-name="this.from"/>
           <b-card-body>{{ text }}</b-card-body>
+
+          <UserIcon v-if="side === 'left'" class="message-icon left-message-icon bg-primary" size="50"
+                    :display-name="this.from"/>
+          <UserIcon v-else-if="side === 'right'" class="message-icon right-message-icon" size="50"
+                    :display-name="this.from"/>
         </b-card>
       </b-col>
 
@@ -34,10 +36,12 @@ export default {
   position: absolute;
   top: 0;
 }
+
 .right-message-icon {
   left: 0;
   transform: translate(-50%, -50%);
 }
+
 .left-message-icon {
   right: 0;
   transform: translate(50%, -50%);

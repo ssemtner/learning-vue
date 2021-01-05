@@ -1,52 +1,54 @@
 <template>
   <b-container>
     <h1>Messaging</h1>
+    <UserIconStack id="icon-stack" :display-name-list="['Scott Semtner', 'Kelly Semtner', 'Jean Dugan']"/>
+
     <br>
 
-    <div v-for="message in this.messages" v-bind:key="message.id">
-      <Message v-if="message.from === 'Scott Semtner'" :from="message.from" :text="message.text" side="right"/>
-<!--      <Message v-if="message.from === this.current" :from="message.from" :text="message.text" side="right"/>-->
-      <Message v-else :from="message.from" :text="message.text" side="left"/>
-    </div>
+    <Conversation :doc="this.firestore_doc" current-user="Scott Semtner"/>
   </b-container>
 </template>
 
 <script>
-import Message from "@/components/Messaging/Message";
+import Conversation from "@/components/Conversation";
+import UserIconStack from "@/components/Messaging/UserIconStack";
 
 export default {
   name: "Messaging",
-  components: {Message},
-  data () {
+  components: {UserIconStack, Conversation},
+  data() {
     return {
-      current: "Scott Semtner",
       messages: [
         {
           id: 0,
           from: "Scott Semtner",
-          text: "I am saying hello"
+          text: "I am saying hello",
+          side: "right"
         },
         {
           id: 1,
           from: "Mitchell Long",
-          text: "This is another person responding"
+          text: "This is another person responding",
+          side: "left"
         },
         {
           id: 2,
           from: "Mitchell Long",
-          text: "Hello how are you doing?"
+          text: "Hello how are you doing?",
+          side: "left"
         },
         {
           id: 3,
           from: "Scott Semtner",
-          text: "I am doing great!"
+          text: "I am doing great!",
+          side: "right"
         },
-      ]
+      ],
+      firestore_doc: "abc@abc.org&sjsemtner@gmail.com"
     }
   }
 }
 </script>
 
 <style scoped>
-
 </style>
