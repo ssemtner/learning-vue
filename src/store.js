@@ -15,8 +15,9 @@ export default new Vuex.Store({
         }
     },
     getters: {
-        user(state) {
-            return state.user
+        user: state => {return state.user},
+        email(state) {
+            return state.user.data.email
         }
     },
     mutations: {
@@ -28,7 +29,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        fetchUser({ commit }, user) {
+        fetchUser({commit}, user) {
             commit("SET_LOGGED_IN", user !== null)
 
             if (user) {
@@ -39,6 +40,6 @@ export default new Vuex.Store({
             } else {
                 commit("SET_USER", null)
             }
-        }
+        },
     }
 })

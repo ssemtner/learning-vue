@@ -1,59 +1,74 @@
 <template>
   <b-container>
-    <h1 class="mb-4">{{ user.data.displayName }}'s Tasks</h1>
+    <b-container v-if="tasks.length === 0">
+      <b-row>
+        <b-col>
+          <b-spinner/>
+        </b-col>
+      </b-row>
+      <b-row class="mt-4">
+        <b-col>
+          <b-button @click="loadData" variant="primary">Press to load data</b-button>
+        </b-col>
+      </b-row>
+    </b-container>
 
-    <h3 v-if="tasks.filter(e => !e.completed).length !== 0">Active</h3>
-    <b-list-group class="my-4">
-      <b-container v-for="task in tasks" v-bind:key="task.id">
-        <b-list-group-item v-if="!task.completed">
-          <b-row>
-            <b-col cols="2">
-              <b-button variant="outline-success" @click="complete(task.id)">
-                <b-icon-check/>
-              </b-button>
-            </b-col>
-            <b-col cols="8">
-              <h6>{{ task.title }}</h6>
-            </b-col>
-            <b-col cols="2">
-              <b-button variant="outline-danger" @click="removeItem(task.id)">
-                <b-icon-x/>
-              </b-button>
-            </b-col>
-          </b-row>
-        </b-list-group-item>
-      </b-container>
-    </b-list-group>
+    <b-container v-else>
+      <h1 class="mb-4">{{ user.data.displayName }}'s Tasks</h1>
 
-    <h3 v-if="tasks.filter(e => e.completed).length !== 0">Completed</h3>
-    <b-list-group class="my-4">
-      <b-container v-for="task in tasks" v-bind:key="task.id">
-        <b-list-group-item v-if="task.completed">
-          <b-row>
-            <b-col cols="2">
-              <b-button variant="outline-primary" @click="activate(task.id)">
-                <b-icon-arrow-counterclockwise/>
-              </b-button>
-            </b-col>
-            <b-col cols="8">
-              <h6>{{ task.title }}</h6>
-            </b-col>
-            <b-col cols="2">
-              <b-button variant="outline-danger" @click="removeItem(task.id)">
-                <b-icon-x/>
-              </b-button>
-            </b-col>
-          </b-row>
-        </b-list-group-item>
-      </b-container>
-    </b-list-group>
+      <h3 v-if="tasks.filter(e => !e.completed).length !== 0">Active</h3>
+      <b-list-group class="my-4">
+        <b-container v-for="task in tasks" v-bind:key="task.id">
+          <b-list-group-item v-if="!task.completed">
+            <b-row>
+              <b-col cols="2">
+                <b-button variant="outline-success" @click="complete(task.id)">
+                  <b-icon-check/>
+                </b-button>
+              </b-col>
+              <b-col cols="8">
+                <h6>{{ task.title }}</h6>
+              </b-col>
+              <b-col cols="2">
+                <b-button variant="outline-danger" @click="removeItem(task.id)">
+                  <b-icon-x/>
+                </b-button>
+              </b-col>
+            </b-row>
+          </b-list-group-item>
+        </b-container>
+      </b-list-group>
 
-    <b-form @submit.prevent="addItem" class="mt-4">
-      <b-form-group label="Task Title" label-for="nameInput">
-        <b-input type="text" required v-model="form.title"></b-input>
-      </b-form-group>
-      <b-button variant="success" type="submit">Add</b-button>
-    </b-form>
+      <h3 v-if="tasks.filter(e => e.completed).length !== 0">Completed</h3>
+      <b-list-group class="my-4">
+        <b-container v-for="task in tasks" v-bind:key="task.id">
+          <b-list-group-item v-if="task.completed">
+            <b-row>
+              <b-col cols="2">
+                <b-button variant="outline-primary" @click="activate(task.id)">
+                  <b-icon-arrow-counterclockwise/>
+                </b-button>
+              </b-col>
+              <b-col cols="8">
+                <h6>{{ task.title }}</h6>
+              </b-col>
+              <b-col cols="2">
+                <b-button variant="outline-danger" @click="removeItem(task.id)">
+                  <b-icon-x/>
+                </b-button>
+              </b-col>
+            </b-row>
+          </b-list-group-item>
+        </b-container>
+      </b-list-group>
+
+      <b-form @submit.prevent="addItem" class="mt-4">
+        <b-form-group label="Task Title" label-for="nameInput">
+          <b-input type="text" required v-model="form.title"></b-input>
+        </b-form-group>
+        <b-button variant="success" type="submit">Add</b-button>
+      </b-form>
+    </b-container>
   </b-container>
 </template>
 
@@ -69,7 +84,7 @@ export default {
       form: {
         title: ""
       },
-      tasks: []
+      tasks: [],
     }
   },
   computed: {
@@ -114,25 +129,27 @@ export default {
       this.tasks[this.tasks.findIndex(e => e.id === id)].completed = false
       this.updateDatabase()
     },
+    test() {
+    },
+    loadData() {
+      try {
+        db.collection("todos").doc(this.user.data.email).get()
+            .then((doc) => {
+              doc.data().tasks.forEach((task) => {
+                this.tasks = [...this.tasks, {
+                  id: this.count,
+                  title: task.title,
+                  completed: task.completed
+                }]
+              })
+            })
+      } catch (e) {
+        console.log("error")
+      }
+    }
   },
-  beforeCreate() {
-
-  },
-  created() {
-    db.collection("todos").doc().get()
-        .then((doc) => {
-          doc.data().tasks.forEach((task) => {
-            this.tasks = [...this.tasks, {
-              id: this.count,
-              title: task.title,
-              completed: task.completed
-            }]
-          })
-        })
+  mounted() {
+    this.loadData()
   }
 }
 </script>
-
-<style scoped>
-
-</style>

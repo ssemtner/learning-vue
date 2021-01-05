@@ -1,9 +1,10 @@
-import Home from "@/views/Home";
-import Calculator from "@/views/Calculator";
+import Home from "@/components/Home";
+import Calculator from "@/components/Calculator";
 import Register from "@/components/Register";
 import Login from "@/components/Login";
 import Dashboard from "@/components/Dashboard";
 import Todo from "@/components/Todo";
+import Messaging from "@/components/Messaging";
 
 export default [
     {
@@ -15,6 +16,16 @@ export default [
         path: '/calculator',
         name: 'Calculator',
         component: Calculator
+    },
+    {
+        path: '/todo',
+        name: 'Todo',
+        component: Todo
+    },
+    {
+        path: '/messaging',
+        name: 'Messaging',
+        component: Messaging
     },
     {
         path: '/auth/register',
@@ -30,10 +41,5 @@ export default [
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard
-    },
-    {
-        path: '/todo',
-        name: 'Todo',
-        component: Todo
     },
 ]

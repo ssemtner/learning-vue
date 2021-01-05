@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import {BootstrapVue, IconsPlugin} from "bootstrap-vue"
-import firebase from "@/firebaseInit";
+import firebaseApp from "@/firebaseInit";
 
 import App from '@/App.vue'
 
@@ -19,7 +19,7 @@ Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
 
-firebase.auth().onAuthStateChanged(user => {
+firebaseApp.auth().onAuthStateChanged(user => {
     store.dispatch("fetchUser", user)
 });
 
