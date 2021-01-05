@@ -1,6 +1,12 @@
 <template>
   <b-container>
-    <b-container v-if="tasks.length === 0">
+    <b-container v-if="!this.user.loggedIn">
+      <b-alert variant="danger" show="">You must be logged in to access your todo list.</b-alert>
+      <b-button to="/auth/login" variant="primary" class="m-4">Login</b-button>
+      <b-button to="/auth/register" variant="primary" class="m-4">Register</b-button>
+    </b-container>
+
+    <b-container v-else-if="tasks.length === 0">
       <b-row>
         <b-col>
           <b-spinner/>
