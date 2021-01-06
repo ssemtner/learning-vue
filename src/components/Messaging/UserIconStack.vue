@@ -1,5 +1,5 @@
 <template>
-  <b-container id="stack" :style="this.shift">
+  <b-container id="stack">
     <UserIcon v-for="icon in this.icons" v-bind="icon" v-bind:key="icon.id" size="50"/>
   </b-container>
 </template>

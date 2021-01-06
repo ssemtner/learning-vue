@@ -27,32 +27,6 @@ export default {
   components: {UserIconStack, Conversation},
   data() {
     return {
-      messages: [
-        {
-          id: 0,
-          from: "Scott Semtner",
-          text: "I am saying hello",
-          side: "right"
-        },
-        {
-          id: 1,
-          from: "Mitchell Long",
-          text: "This is another person responding",
-          side: "left"
-        },
-        {
-          id: 2,
-          from: "Mitchell Long",
-          text: "Hello how are you doing?",
-          side: "left"
-        },
-        {
-          id: 3,
-          from: "Scott Semtner",
-          text: "I am doing great!",
-          side: "right"
-        },
-      ],
       firestore_doc: "abc@abc.org&sjsemtner@gmail.com"
     }
   },
@@ -60,7 +34,7 @@ export default {
     ...mapGetters({
       user: "user"
     })
-  }
+  },
 }
 </script>
 
