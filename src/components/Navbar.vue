@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="dark" class="mb-4">
+  <b-navbar id="navbar-margin" toggleable="lg" type="dark" variant="dark" fixed="top">
     <b-navbar-brand to="/" exact exact-active-class="active">Vue Example Apps</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
