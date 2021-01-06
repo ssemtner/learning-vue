@@ -1,9 +1,9 @@
 <template>
   <div>
     <b-row align-h="center" class="m-4">
-      <b-col v-if="side === 'right'" cols="2" md="4"/>
+      <b-col v-if="side === 'right'" cols="0" md="4"/>
 
-      <b-col cols="10" md="8">
+      <b-col cols="12" md="8">
         <b-card title="Message">
           <b-card-body>{{ text }}</b-card-body>
 
@@ -14,7 +14,7 @@
         </b-card>
       </b-col>
 
-      <b-col v-if="side === 'left'" cols="2" md="4"/>
+      <b-col v-if="side === 'left'" cols="0" md="4"/>
     </b-row>
 
     <br>
