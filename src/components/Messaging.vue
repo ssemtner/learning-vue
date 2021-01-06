@@ -6,13 +6,16 @@
       <b-button to="/auth/register" variant="primary" class="m-4">Register</b-button>
     </b-container>
 
+    <b-container v-else-if="this.displayNameList.filter(e => e === this.user.data.displayName).length === 0">
+      <b-alert variant="danger" show="">You do not have access</b-alert>
+    </b-container>
     <b-container v-else>
       <h1>Messaging</h1>
-      <UserIconStack id="icon-stack" :display-name-list="['Scott Semtner', 'Kelly Semtner', 'Jean Dugan']"/>
+      <UserIconStack id="icon-stack" :display-name-list="displayNameList"/>
 
       <br>
 
-      <Conversation :doc="this.firestore_doc" current-user="Scott Semtner"/>
+      <Conversation :doc="this.firestoreDoc" :current-user="this.user.data.displayName" class="mb-4"/>
     </b-container>
   </b-container>
 </template>
@@ -27,7 +30,8 @@ export default {
   components: {UserIconStack, Conversation},
   data() {
     return {
-      firestore_doc: "abc@abc.org&sjsemtner@gmail.com"
+      firestoreDoc: "abc@abc.org&sjsemtner@gmail.com",
+      displayNameList: ["Scott Semtner", "Another Person"]
     }
   },
   computed: {
